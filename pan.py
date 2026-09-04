@@ -19,7 +19,7 @@ MASTERS_HEADERS = {
     "Sec-Fetch-Dest": "empty",
 }
 
-DEVELOPER_CREDIT = "Abhigyan - https://t.me/bytecraft_community"
+DEVELOPER_CREDIT = "rehuu - https://t.me/RehuSzr"
 
 def add_credit(d):
     d["developer"] = DEVELOPER_CREDIT
