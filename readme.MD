@@ -1,22 +1,30 @@
-```markdown
+<!-- markdownlint-disable MD033 -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Flask-2.0+-green?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+  <img src="https://img.shields.io/badge/REST-API-brightgreen?style=for-the-badge&logo=fastapi&logoColor=white" alt="REST API">
+  <img src="https://img.shields.io/badge/Deploy-Render-purple?style=for-the-badge&logo=render&logoColor=white" alt="Render">
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License">
+</p>
+
 # GST API Suite
 
-[![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/flask-2.0+-green.svg)](https://flask.palletsprojects.com/)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Render](https://img.shields.io/badge/deploy-Render-purple.svg)](https://render.com)
-
-A production‑ready Flask‑based REST API for GSTIN, PAN, and business‑name lookups, aggregating data from **Razorpay** and **MastersIndia** upstream sources.
+**A production‑grade microservice for real‑time GSTIN, PAN, and business‑name lookups**  
+Aggregates data from **Razorpay** and **MastersIndia** to provide unified, fast, and reliable GST information.
 
 ---
 
-## Table of Contents
+## 📖 Table of Contents
 
 - [Overview](#overview)
-- [Features](#features)
+- [Key Features](#key-features)
+- [Technology Stack](#technology-stack)
 - [Quick Start](#quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running Locally](#running-locally)
 - [Configuration](#configuration)
-- [API Reference](#api-reference)
+- [API Documentation](#api-documentation)
   - [1. GSTIN Information](#1-gstin-information)
   - [2. PAN to GSTINs](#2-pan-to-gstins)
   - [3. GSTIN to PAN](#3-gstin-to-pan)
@@ -24,37 +32,55 @@ A production‑ready Flask‑based REST API for GSTIN, PAN, and business‑name 
   - [5. Business Name → Active/Cancelled GSTINs](#5-business-name--activecancelled-gstins)
   - [6. GSTIN Detail (Razorpay)](#6-gstin-detail-razorpay)
   - [7. Combined Multi‑Parameter Search](#7-combined-multiparameter-search)
-  - [Health / Info Endpoint](#health--info-endpoint)
+  - [Root / Health Endpoint](#root--health-endpoint)
 - [Error Handling](#error-handling)
 - [Deployment](#deployment)
+  - [Render (Recommended)](#render-recommended)
+  - [Manual / Other Platforms](#manual--other-platforms)
 - [Environment Variables](#environment-variables)
 - [Dependencies](#dependencies)
-- [Data Sources & Disclaimer](#data-sources--disclaimer)
+- [Upstream Data Sources](#upstream-data-sources)
+- [Contributing](#contributing)
+- [Support & Feedback](#support--feedback)
 - [License](#license)
 
 ---
 
 ## Overview
 
-The **GST API Suite** provides a unified interface to query Indian GST registration data. It wraps two external providers:
+The **GST API Suite** is a lightweight, container‑ready Flask application that serves as a unified gateway for querying Indian GST registration data. It abstracts complexity by wrapping two reliable external APIs:
 
-- **Razorpay** – for direct GSTIN and PAN lookups.
-- **MastersIndia** – for name‑based searches with extensive registration details.
+- **Razorpay** – for direct GSTIN and PAN lookups with detailed registration information.
+- **MastersIndia** – for name‑based fuzzy searches returning extensive taxpayer details.
 
-All responses include developer credit and an optional owner field for branding.
+All responses are delivered in clean JSON, include developer credit, and allow you to brand the output with your own `owner` field—perfect for white‑label integrations.
 
 ---
 
-## Features
+## Key Features
 
-- **GSTIN Lookup** – retrieve full details for a given GSTIN.
-- **PAN Lookup** – list all GSTINs registered under a PAN.
-- **GSTIN → PAN Extraction** – derive the PAN from a GSTIN structurally.
-- **Business Name Search** – fetch detailed GSTIN information by company name.
-- **Status‑Filtered Results** – separate active and cancelled GSTINs.
-- **Combined Search** – query by name, GSTIN, and PAN simultaneously.
-- **JSON Responses** – consistent, lightweight, and machine‑friendly.
-- **Render‑Ready** – deploy instantly on Render with zero configuration.
+- 🔍 **GSTIN Lookup** – retrieve full registration details for any valid GSTIN.
+- 📋 **PAN Lookup** – list all GSTINs registered under a given PAN.
+- 🔄 **GSTIN → PAN Extraction** – derive the PAN from a GSTIN structurally (no external verification).
+- 🏢 **Business Name Search** – get detailed GSTIN data by company or trade name.
+- ✅ **Status‑Filtered Results** – separate active and cancelled GSTINs in a single call.
+- 🔗 **Combined Search** – query by name, GSTIN, and PAN simultaneously with one request.
+- 📦 **Simple JSON Responses** – consistent, lightweight, and machine‑friendly.
+- ⚡ **Optimised for Speed** – non‑blocking, with configurable timeouts.
+- 🚀 **Render‑Ready** – deploy in minutes with zero configuration.
+- 🧾 **Built‑in Developer Credit** – automatic attribution to `rehuu`.
+
+---
+
+## Technology Stack
+
+| Layer          | Technology                         |
+|----------------|------------------------------------|
+| **Runtime**    | Python 3.9+                        |
+| **Framework**  | Flask 2.0+                         |
+| **HTTP Client**| Requests 2.28+                     |
+| **Deployment** | Render, Docker, or any WSGI server |
+| **Format**     | JSON                               |
 
 ---
 
@@ -63,9 +89,11 @@ All responses include developer credit and an optional owner field for branding.
 ### Prerequisites
 
 - Python 3.9 or higher
-- `pip` package manager
+- `pip` (Python package manager)
 
 ### Installation
+
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/yourusername/gst-api-suite.git
@@ -73,13 +101,15 @@ cd gst-api-suite
 pip install -r requirements.txt
 ```
 
-Run Locally
+Running Locally
+
+Start the server with:
 
 ```bash
 python main.py
 ```
 
-The server will start at http://localhost:5000.
+The API will be available at http://localhost:5000.
 Test it with:
 
 ```bash
@@ -90,30 +120,33 @@ curl http://localhost:5000/
 
 Configuration
 
-Before deploying, set the OWNER variable in main.py:
+To personalise the owner field in all JSON responses, set the OWNER variable before running the app.
+
+Option 1 – Hard‑code in main.py:
 
 ```python
 OWNER = "Your Company Name"
 ```
 
-Alternatively, use an environment variable:
+Option 2 – Environment variable:
 
 ```bash
 export OWNER="Your Company Name"
 ```
 
-If not set, the owner field in responses will display "NOT SET - edit OWNER at top of file".
+If not set, the default message "NOT SET - edit OWNER at top of file" will appear.
 
 ---
 
-API Reference
+API Documentation
 
-All endpoints return JSON. Each successful response includes:
+All endpoints return JSON.
+Every successful response includes:
 
 · developer – always "rehuu - https://t.me/RehuSzr"
 · owner – the value you configured.
 
-Error responses follow the same structure with an "error" field.
+Errors are returned with appropriate HTTP status codes and an "error" field.
 
 ---
 
@@ -121,17 +154,14 @@ Error responses follow the same structure with an "error" field.
 
 Retrieve complete GSTIN details from Razorpay.
 
-Endpoint
-GET /gstin/<gstin>
-
-Path Parameter
-
-Name Type Description
-gstin string 15‑character GSTIN
+Attribute Description
+Endpoint GET /gstin/<gstin>
+Path Parameter gstin – 15‑character GSTIN
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /gstin/10ABCDE1234F1Z5
 ```
 
@@ -183,17 +213,14 @@ Example Response
 
 List all GST registrations associated with a PAN (from Razorpay).
 
-Endpoint
-GET /pan/<pan>
-
-Path Parameter
-
-Name Type Description
-pan string 10‑character PAN
+Attribute Description
+Endpoint GET /pan/<pan>
+Path Parameter pan – 10‑character PAN
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /pan/ABCDE1234F
 ```
 
@@ -231,23 +258,20 @@ Example Response
 
 Extract the PAN from a GSTIN (characters 3–12) and perform a PAN lookup.
 
-Endpoint
-GET /gst-to-pan/<gstin>
-
-Path Parameter
-
-Name Type Description
-gstin string 15‑character GSTIN
+Attribute Description
+Endpoint GET /gst-to-pan/<gstin>
+Path Parameter gstin – 15‑character GSTIN
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /gst-to-pan/10ABCDE1234F1Z5
 ```
 
-Example Response – same as /pan/ response.
+Response – same as /pan/ (above).
 
-Note: This does not independently verify the PAN; it is a structural extraction.
+⚠️ Note: This does not independently verify the PAN; it is a structural extraction only.
 
 ---
 
@@ -255,17 +279,14 @@ Note: This does not independently verify the PAN; it is a structural extraction.
 
 Search by business name using MastersIndia and return full registration details.
 
-Endpoint
-GET /name-to-gstin?name=<company>
-
-Query Parameter
-
-Name Type Description
-name string Business or trade name (URL‑encoded)
+Attribute Description
+Endpoint GET /name-to-gstin?name=<company>
+Query Parameter name – business or trade name (URL‑encoded)
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /name-to-gstin?name=ABC%20Electronics
 ```
 
@@ -306,19 +327,16 @@ Example Response
 
 5. Business Name → Active/Cancelled GSTINs
 
-Search by business name and get a simplified list divided by status.
+Search by business name and get a simplified list grouped by registration status.
 
-Endpoint
-GET /search-gstin?name=<company>
-
-Query Parameter
-
-Name Type Description
-name string Business or trade name
+Attribute Description
+Endpoint GET /search-gstin?name=<company>
+Query Parameter name – business or trade name
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /search-gstin?name=ABC%20Electronics
 ```
 
@@ -365,17 +383,14 @@ Example Response
 
 Fetches GSTIN details via Razorpay and includes a note about MastersIndia limitations.
 
-Endpoint
-GET /gstin-detail/<gstin>
-
-Path Parameter
-
-Name Type Description
-gstin string 15‑character GSTIN
+Attribute Description
+Endpoint GET /gstin-detail/<gstin>
+Path Parameter gstin – 15‑character GSTIN
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /gstin-detail/10ABCDE1234F1Z5
 ```
 
@@ -400,21 +415,16 @@ Example Response
 7. Combined Multi‑Parameter Search
 
 Perform all three lookups (name, GSTIN, PAN) in a single call.
-Supply any combination of query parameters – unused parameters are ignored.
+Unused parameters are ignored.
 
-Endpoint
-GET /all-search?name=<value>&gstin=<value>&pan=<value>
-
-Query Parameters (all optional)
-
-Name Type Description
-name string Business name
-gstin string GSTIN
-pan string PAN
+Attribute Description
+Endpoint GET /all-search?name=<value>&gstin=<value>&pan=<value>
+Query Parameters name, gstin, pan (all optional)
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /all-search?name=ABC%20Electronics&pan=ABCDE1234F&gstin=10ABCDE1234F1Z5
 ```
 
@@ -439,16 +449,17 @@ Example Response
 
 ---
 
-Health / Info Endpoint
+Root / Health Endpoint
 
 Returns API metadata, version, and available endpoints.
 
-Endpoint
-GET /
+Attribute Description
+Endpoint GET /
+Success Code 200 OK
 
 Example Request
 
-```
+```http
 GET /
 ```
 
@@ -480,41 +491,40 @@ Example Response
 
 Error Handling
 
-All errors return an appropriate HTTP status code (4xx/5xx) with a JSON body:
+All errors return an appropriate HTTP status code (4xx or 5xx) with a consistent JSON structure:
 
 ```json
 {
-  "error": "Descriptive error message",
+  "error": "Human‑readable error message",
   "developer": "rehuu - https://t.me/RehuSzr",
   "owner": "DemoOwner"
 }
 ```
 
-Common error scenarios:
-
-· Missing required query parameters (e.g., name in /search-gstin)
-· Invalid GSTIN format (in /gst-to-pan)
-· Upstream service timeouts or failures
+Status Code Common Cause
+400 Missing required parameter or invalid format
+404 Resource not found (e.g., invalid GSTIN)
+500 Upstream service failure or timeout
 
 ---
 
 Deployment
 
-Render
+Render (Recommended)
 
-1. Fork/clone this repository to GitHub.
+1. Push the repository to GitHub.
 2. Create a new Web Service on Render.
-3. Connect your repository.
+3. Connect your GitHub repo.
 4. Use the following settings:
    · Build Command: pip install -r requirements.txt
    · Start Command: python main.py
-5. Optionally add the environment variable OWNER with your desired value.
-6. Deploy – the API will be available at https://your-app.onrender.com.
+5. Add an optional environment variable OWNER for branding.
+6. Click Deploy – your API will be live at https://your-app.onrender.com.
 
-Manual Deployment
+Manual / Other Platforms
 
-You can also deploy on any platform that supports Python web applications.
-Set the PORT environment variable to match your platform’s expectations.
+· Set the PORT environment variable to match your platform’s expectation.
+· Run python main.py or use a WSGI server like Gunicorn.
 
 ---
 
@@ -528,31 +538,57 @@ OWNER Custom owner name for response branding "NOT SET..." (fallback)
 
 Dependencies
 
-· Flask – web framework
-· Requests – HTTP client
+· Flask – lightweight WSGI web framework.
+· Requests – elegant HTTP client.
 
-Install them via pip install flask requests or use the provided requirements.txt.
+Install all with:
+
+```bash
+pip install -r requirements.txt
+```
 
 ---
 
-Data Sources & Disclaimer
+Upstream Data Sources
 
-This API acts as an aggregator for third‑party services:
+This API acts as an aggregator; it does not host any GST data itself.
+All information is fetched in real‑time from:
 
-· Razorpay – provides direct GSTIN and PAN endpoints.
-· MastersIndia – provides business‑name search capabilities.
+· Razorpay – GSTIN and PAN endpoints.
+· MastersIndia – name‑based search API.
 
-All data is sourced from these external providers. The availability, accuracy, and structure of the data are subject to the providers’ terms and changes. This project does not guarantee the correctness or completeness of the returned information. Use at your own risk.
+Please note:
+
+· Data accuracy, completeness, and uptime depend entirely on these third‑party services.
+· The API providers may change their endpoints, response schemas, or rate limits at any time.
+· This project does not guarantee the reliability of the upstream services.
+
+---
+
+Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request for:
+
+· Bug fixes
+· New data sources
+· Performance improvements
+· Documentation enhancements
+
+Please ensure your code follows PEP 8 and includes appropriate comments.
+
+---
+
+Support & Feedback
+
+· Developer: rehuu (Telegram)
+· For general queries, open a GitHub issue.
+· For feature requests or custom deployments, reach out directly.
 
 ---
 
 License
 
-This project is licensed under the MIT License. See the LICENSE file for details. However, note that usage of the underlying upstream services is subject to their respective terms and conditions.
-
----
-
-Developer: rehuu
-Contributions & Feedback: Welcome via Issues and Pull Requests.
+This project is licensed under the MIT License – see the LICENSE file for details.
+However, usage of the underlying upstream APIs is subject to their respective terms and conditions.
 
 ```
