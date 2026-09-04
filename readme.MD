@@ -14,38 +14,6 @@ Aggregates data from **Razorpay** and **MastersIndia** to provide unified, fast,
 
 ---
 
-## 📖 Table of Contents
-
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Technology Stack](#technology-stack)
-- [Quick Start](#quick-start)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Running Locally](#running-locally)
-- [Configuration](#configuration)
-- [API Documentation](#api-documentation)
-  - [1. GSTIN Information](#1-gstin-information)
-  - [2. PAN to GSTINs](#2-pan-to-gstins)
-  - [3. GSTIN to PAN](#3-gstin-to-pan)
-  - [4. Business Name → Detailed GSTINs](#4-business-name--detailed-gstins)
-  - [5. Business Name → Active/Cancelled GSTINs](#5-business-name--activecancelled-gstins)
-  - [6. GSTIN Detail (Razorpay)](#6-gstin-detail-razorpay)
-  - [7. Combined Multi‑Parameter Search](#7-combined-multiparameter-search)
-  - [Root / Health Endpoint](#root--health-endpoint)
-- [Error Handling](#error-handling)
-- [Deployment](#deployment)
-  - [Render (Recommended)](#render-recommended)
-  - [Manual / Other Platforms](#manual--other-platforms)
-- [Environment Variables](#environment-variables)
-- [Dependencies](#dependencies)
-- [Upstream Data Sources](#upstream-data-sources)
-- [Contributing](#contributing)
-- [Support & Feedback](#support--feedback)
-- [License](#license)
-
----
-
 ## Overview
 
 The **GST API Suite** is a lightweight, container‑ready Flask application that serves as a unified gateway for querying Indian GST registration data. It abstracts complexity by wrapping two reliable external APIs:
