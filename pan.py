@@ -3,6 +3,7 @@ import requests
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
+OWNER = os.environ.get("OWNER", "")
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Mobile Safari/537.36",
